@@ -6,14 +6,6 @@ const House = () => {
   const [position, setPosition] = useState({ x: 600, y: 200 });
   const [showHuman, setShowHuman] = useState(false);
 
-  // Size of each square in the grid (must match the grid size on the canvas)
-  const gridSize = 80;
-
-  // Function to snap to the nearest grid position
-  const snapToGrid = (coord) => {
-    return Math.floor(coord / gridSize) * gridSize;
-  };
-
   const handleDragStart = (e) => {
     const img = new Image();
     e.dataTransfer.setDragImage(img, 0, 0); // Hide default drag image
@@ -21,10 +13,7 @@ const House = () => {
   };
 
   const handleDrop = (e) => {
-    // Snap the house's x and y position to the nearest grid
-    const snappedX = snapToGrid(e.clientX - 8); // Adjust for the center of the house
-    const snappedY = snapToGrid(e.clientY - 8);
-    setPosition({ x: snappedX, y: snappedY });
+    setPosition({ x: e.clientX - 8, y: e.clientY - 8 }); // No snapping, free placement
     setShowHuman(true); // Show human when house is placed
   };
 
@@ -35,6 +24,7 @@ const House = () => {
         onDragStart={handleDragStart}
         onDrag={(e) => {
           if (e.clientX === 0 && e.clientY === 0) return; // Ignore empty drag
+          setPosition({ x: e.clientX - 8, y: e.clientY - 8 }); // Free placement during drag
         }}
         onDragEnd={handleDrop}
         style={{
