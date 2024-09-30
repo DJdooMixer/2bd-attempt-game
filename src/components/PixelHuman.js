@@ -4,13 +4,13 @@ import React from 'react';
 const PixelHuman = ({ housePosition }) => {
   const { x, y } = housePosition;
 
-  // Size of the smaller sub-pixels (adjust if needed)
-  const subPixelSize = 16; // Assuming the smaller red square is 16px x 16px
+  // Sub-pixel size (same as the red square size, 16px x 16px)
+  const subPixelSize = 16;
 
-  // Position the human to align with the grid but at the size of a smaller sub-pixel
+  // Position the human at an arbitrary position (right and below the house)
   const humanPosition = {
-    top: `${y + subPixelSize}px`, // Position below the house
-    left: `${x}px`, // Align horizontally with the house
+    top: `${y + subPixelSize}px`, // Position slightly below the house
+    left: `${x + subPixelSize * 2}px`, // Position to the right of the house
   };
 
   return (
@@ -22,7 +22,7 @@ const PixelHuman = ({ housePosition }) => {
         backgroundColor: '#FF4500', // Head color (orange-red)
         top: humanPosition.top,
         left: humanPosition.left,
-        border: '1px solid black', // Optional: Black border for the head to match the grid outline
+        border: '1px solid black', // Black border to match the grid outline
       }}
     />
   );
