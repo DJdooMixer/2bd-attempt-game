@@ -19,6 +19,7 @@ const PixelHuman = ({ housePosition }) => {
         backgroundColor: '#FFD700', // Human body color
         top: humanPosition.top,
         left: humanPosition.left,
+        border: '1px solid black', // Black border for the human
       }}
     >
       <div
@@ -28,6 +29,7 @@ const PixelHuman = ({ housePosition }) => {
           backgroundColor: '#FF4500', // Head color
           position: 'absolute',
           top: '-8px', // Offset for the head above the body
+          border: '1px solid black', // Black border for the head
         }}
       />
     </div>

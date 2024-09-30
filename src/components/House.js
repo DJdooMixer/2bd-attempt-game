@@ -3,8 +3,16 @@ import React, { useState } from 'react';
 import PixelHuman from './PixelHuman';
 
 const House = () => {
-  const [position, setPosition] = useState({ x: 300, y: 50 });
+  const [position, setPosition] = useState({ x: 600, y: 200 });
   const [showHuman, setShowHuman] = useState(false);
+
+  // Size of each square in the grid (must match the grid size on the canvas)
+  const gridSize = 80;
+
+  // Function to snap to the nearest grid position
+  const snapToGrid = (coord) => {
+    return Math.floor(coord / gridSize) * gridSize;
+  };
 
   const handleDragStart = (e) => {
     const img = new Image();
@@ -13,7 +21,10 @@ const House = () => {
   };
 
   const handleDrop = (e) => {
-    setPosition({ x: e.clientX - 8, y: e.clientY - 8 });
+    // Snap the house's x and y position to the nearest grid
+    const snappedX = snapToGrid(e.clientX - 8); // Adjust for the center of the house
+    const snappedY = snapToGrid(e.clientY - 8);
+    setPosition({ x: snappedX, y: snappedY });
     setShowHuman(true); // Show human when house is placed
   };
 
@@ -24,13 +35,13 @@ const House = () => {
         onDragStart={handleDragStart}
         onDrag={(e) => {
           if (e.clientX === 0 && e.clientY === 0) return; // Ignore empty drag
-          setPosition({ x: e.clientX - 8, y: e.clientY - 8 });
         }}
         onDragEnd={handleDrop}
         style={{
-          width: '16px', // Smaller house size
+          width: '16px', // House size
           height: '16px',
           backgroundColor: '#8B4513', // Brown for house
+          border: '1px solid black', // Black border for house pixel
           position: 'absolute',
           top: `${position.y}px`,
           left: `${position.x}px`,
